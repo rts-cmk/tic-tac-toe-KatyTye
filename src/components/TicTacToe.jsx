@@ -104,15 +104,11 @@ function TicTacToe({ type = "normal" }) {
 	}
 
 	function handleTileClick(index) {
-		if (tiles[index] !== null && type == "normal") {
+		if (tiles[index] !== null) {
 			return
 		}
 
 		if (gameState !== GameState.inProgress) {
-			return
-		}
-
-		if (tiles[index] === playerTurn) {
 			return
 		}
 
