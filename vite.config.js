@@ -4,7 +4,7 @@ import react from '@vitejs/plugin-react'
 // https://vite.dev/config/
 export default defineConfig({
   plugins: [react()],
-  base: '/tic-tac-toe-katytye/',
+  base: '/tic-tac-toe-KatyTye/',
   build: {
     outDir: 'docs',
   }
