@@ -1,0 +1,16 @@
+@use "./_colors.sass" as var
+
+body
+	color: white
+	display: flex
+	align-items: center
+	flex-direction: column
+	font-family: var.$font-family
+	background-color: var.$background-color
+
+.game-over, .reset-button
+	margin-top: 50px
+	font-size: var.$font-size-button
+
+h1, .game-over
+	text-align: center

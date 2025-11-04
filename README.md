@@ -1,17 +1,16 @@
-# Tic Tac Toe med React og Vite
+# React + Vite
 
-**Opgave:**  
-1. Se følgende video: [Build an Awesome Version of Tic Tac Toe in React Tutorial](https://www.youtube.com/watch?v=4Gt_YyGf6B0).
-2. Udvikl Tic Tac Toe-applikationen som vist i videoen, der inkluderer følgende funktioner:
-   - **Komponenter:** Opdel applikationen i flere komponenter, såsom Board og Square.
-   - **useState Hook:** Brug useState til at håndtere spillets tilstand, herunder spillerens træk og spillets status.
-   - **Props:** Send data mellem komponenterne ved hjælp af props.
-   - **Vinderlogik:** Implementer logik til at bestemme vinderen af spillet.
+This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
 
-**Krav:**
-- Projektet skal være oprettet og kørt ved hjælp af Vite.
-- Koden skal være velstruktureret og kommenteret.
-- Applikationen skal være responsiv og fungere på både desktop og mobile enheder.
+Currently, two official plugins are available:
 
-**Aflevering:**
-- Push projektet til dette Git-repository.
+- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) (or [oxc](https://oxc.rs) when used in [rolldown-vite](https://vite.dev/guide/rolldown)) for Fast Refresh
+- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+
+## React Compiler
+
+The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+
+## Expanding the ESLint configuration
+
+If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
