@@ -1,5 +1,5 @@
 function Tile({ className, value, onClick, playerTurn }) {
-	let hoverClass = null
+	let hoverClass = ""
 
 	if (value == null && playerTurn != null) {
 		hoverClass = `${playerTurn.toLowerCase()}-hover`

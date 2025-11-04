@@ -27,7 +27,7 @@ const winningCombinations = [
 	{ combo: [2, 4, 6], strikeClass: "strike-diagonal-2" }
 ]
 
-function checkWinner(tiles, setStrikeClass, setGameState, GameState) {
+function checkWinner(tiles, setStrikeClass, setGameState, GameState, type, setCustomHeight) {
 	for (const { combo, strikeClass } of winningCombinations) {
 		const tileValue1 = tiles[combo[0]]
 		const tileValue2 = tiles[combo[1]]
@@ -37,23 +37,30 @@ function checkWinner(tiles, setStrikeClass, setGameState, GameState) {
 			setStrikeClass(strikeClass)
 			if (tileValue1 === PLAYER_X || tileValue1 === PLAYER_O) {
 				setGameState(GameState[`player${tileValue1}Wins`])
+				setCustomHeight(654)
 				winAudio.play()
 				return
 			}
 		}
 	}
 
-	const areAllTilesFilledIn = tiles.every((tile) => tile !== null)
-	if (areAllTilesFilledIn) {
-		setGameState(GameState.draw)
-		winAudio.play()
+	if (type == "normal") {
+		const areAllTilesFilledIn = tiles.every((tile) => tile !== null)
+		if (areAllTilesFilledIn) {
+			setGameState(GameState.draw)
+			setCustomHeight(654)
+			winAudio.play()
+		}
 	}
 }
 
-function TicTacToe() {
+function TicTacToe({ type = "normal" }) {
 	const [gameState, setGameState] = useState(GameState.inProgress)
 	const [playerTurn, setPlayerTurn] = useState(PLAYER_X)
+	const [customHeight, setCustomHeight] = useState(421)
 	const [tiles, setTiles] = useState(Array(9).fill(null))
+	const [lastPlacedX, setLastPlacedX] = useState([])
+	const [lastPlacedO, setLastPlacedO] = useState([])
 	const [strikeClass, setStrikeClass] = useState()
 
 	useEffect(() => {
@@ -61,16 +68,59 @@ function TicTacToe() {
 			clickAudio.play()
 		}
 
-		checkWinner(tiles, setStrikeClass, setGameState, GameState)
+		checkWinner(tiles, setStrikeClass, setGameState, GameState, type, setCustomHeight)
 	}, [tiles])
 
+	function updateTiles() {
+
+	}
+
+	function returnLastPlace(currentType, newPlace) {
+		if (currentType === PLAYER_X) {
+			if (lastPlacedX.length >= 4) {
+				const updated = [lastPlacedX[1], lastPlacedX[2], lastPlacedX[3], newPlace]
+				setLastPlacedX(updated)
+				updateTiles()
+				return lastPlacedX[0]
+			} else {
+				const updated = [...lastPlacedX, newPlace]
+				setLastPlacedX(updated)
+			}
+		}
+		if (currentType === PLAYER_O) {
+			if (lastPlacedO.length >= 4) {
+				const updated = [lastPlacedO[1], lastPlacedO[2], lastPlacedO[3], newPlace]
+				setLastPlacedO(updated)
+				updateTiles()
+				return lastPlacedO[0]
+			} else {
+				const updated = [...lastPlacedO, newPlace]
+				setLastPlacedO(updated)
+			}
+		}
+
+		updateTiles()
+		return false
+	}
+
 	function handleTileClick(index) {
-		if (tiles[index] !== null || gameState !== GameState.inProgress) {
+		if (tiles[index] !== null && type == "normal") {
+			return
+		}
+
+		if (gameState !== GameState.inProgress) {
+			return
+		}
+
+		if (tiles[index] === playerTurn) {
 			return
 		}
 
 		const newTiles = [...tiles]
 		newTiles[index] = playerTurn
+		if (type !== "normal") {
+			newTiles[returnLastPlace(playerTurn, index)] = null
+		}
 		setTiles(newTiles)
 
 		if (playerTurn === PLAYER_X) {
@@ -85,12 +135,18 @@ function TicTacToe() {
 		setGameState(GameState.inProgress)
 		setTiles(Array(9).fill(null))
 		setPlayerTurn(PLAYER_X)
+		setCustomHeight(421)
 		setStrikeClass(null)
+		setLastPlacedO([])
+		setLastPlacedX([])
+
 	}
 
 	return (
-		<div>
-			<h1>TicTacToe</h1>
+		<section style={{ height: `${customHeight}px` }}>
+			<h1>TicTacToe
+				{(type !== "normal") && <span> ({type})</span>}</h1>
+			<p className="players-turn">Player {playerTurn}'s turn.</p>
 			<Board
 				playerTurn={playerTurn}
 				tiles={tiles}
@@ -99,7 +155,7 @@ function TicTacToe() {
 			/>
 			<GameOver gameState={gameState} />
 			<Reset gameState={gameState} onReset={handleReset} />
-		</div>
+		</section>
 	)
 }
 

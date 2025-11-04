@@ -7,6 +7,7 @@
 	position: relative
 	grid-template-rows: 100px 100px 100px
 	grid-template-columns: 100px 100px 100px
+	border: var.$border-thick*2 solid var.$border-color
 
 .tile
 	display: flex
@@ -28,6 +29,10 @@
 .o-hover:hover::after
 	content: "O"
 	opacity: 0.4
+
+.players-turn
+	font-style: italic
+	text-align: center
 
 .strike
 	position: absolute

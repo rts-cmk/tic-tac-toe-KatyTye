@@ -6,6 +6,7 @@ function App() {
 	return (
 		<>
 			<TicTacToe />
+			<TicTacToe type="infinite" />
 		</>
 	)
 }
